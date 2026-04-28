@@ -7,390 +7,237 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #f8fafc; 
-            color: #0f172a; 
-        }
-
-        .glass-header {
-            background: rgba(30, 64, 175, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .card-premium {
-            background: white;
-            border-radius: 20px;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-        }
-
-        .tab-btn {
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn.active {
-            background: #1e40af;
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.3);
-        }
-
-        .status-badge {
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 9999px;
-            text-transform: uppercase;
-        }
-
-        .data-grid-item {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 8px 12px;
-            border: 1px solid #f1f5f9;
-        }
-
-        .pulse-warning {
-            animation: warning-glow 2s infinite;
-        }
-
-        @keyframes warning-glow {
-            0%, 100% { border-color: #fee2e2; background-color: white; }
-            50% { border-color: #fecaca; background-color: #fff1f2; }
-        }
-
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .glass-header { background: rgba(30, 64, 175, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .card-premium { background: white; border-radius: 20px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.3s ease; }
+        .tab-btn { transition: all 0.3s ease; }
+        .tab-btn.active { background: #1e40af; color: white; transform: scale(1.05); box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.3); }
+        .status-badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 9999px; text-transform: uppercase; }
+        .pulse-warning { animation: warning-glow 2s infinite; }
+        @keyframes warning-glow { 0%, 100% { border-color: #fee2e2; } 50% { border-color: #fca5a5; background-color: #fff1f2; } }
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-12">
 
-    <!-- Header Section -->
     <header class="glass-header sticky top-0 z-[100] text-white px-6 py-5 shadow-xl">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
             <div>
-                <h1 class="text-xl font-extrabold tracking-tight">Monitoring Performa</h1>
+                <h1 class="text-xl font-extrabold tracking-tight">Monitoring Real-Time</h1>
                 <div class="flex items-center gap-2 mt-1">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                    </span>
-                    <p class="text-[11px] font-medium text-blue-100 uppercase tracking-widest" id="last-update">Menghubungkan...</p>
+                    <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>
+                    <p class="text-[11px] font-medium text-blue-100 uppercase" id="last-update">Menghubungkan...</p>
                 </div>
             </div>
-            <button onclick="refreshData()" id="refresh-btn" class="p-3 bg-white/10 hover:bg-white/20 rounded-2xl transition-all active:scale-90">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
+            <button onclick="refreshData()" id="refresh-btn" class="p-3 bg-white/10 hover:bg-white/20 rounded-2xl transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
             </button>
         </div>
     </header>
 
-    <!-- Content -->
     <div class="max-w-4xl mx-auto mt-6 px-4">
-        <!-- Stats Summary / Targets -->
-        <div class="grid grid-cols-3 gap-3 mb-6">
-            <div class="bg-white p-3 rounded-2xl border border-slate-200 text-center shadow-sm">
-                <p class="text-[8px] font-bold text-slate-400 uppercase tracking-wider">Target Speed</p>
-                <p class="text-sm font-extrabold text-slate-700">≤ 120s</p>
-            </div>
-            <div class="bg-white p-3 rounded-2xl border border-slate-200 text-center shadow-sm">
-                <p class="text-[8px] font-bold text-slate-400 uppercase tracking-wider">Target TTM</p>
-                <p class="text-sm font-extrabold text-slate-700">≥ 25%</p>
-            </div>
-            <div class="bg-white p-3 rounded-2xl border border-slate-200 text-center shadow-sm">
-                <p class="text-[8px] font-bold text-slate-400 uppercase tracking-wider">Target Member</p>
-                <p class="text-sm font-extrabold text-slate-700">≥ 28%</p>
-            </div>
-        </div>
-
-        <!-- Filters Section -->
+        <!-- Filter Section -->
         <div class="card-premium p-5 mb-6">
-            <!-- Row 1: AM & AC -->
             <div class="grid grid-cols-2 gap-4 mb-4">
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider ml-1">Area Manager</label>
-                    <select id="filter-am" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none appearance-none cursor-pointer transition-all hover:bg-slate-100">
-                        <option value="">Semua AM</option>
-                    </select>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Area Manager</label>
+                    <select id="filter-am" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold outline-none"><option value="">Semua AM</option></select>
                 </div>
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider ml-1">Area Coordinator</label>
-                    <select id="filter-ac" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none appearance-none cursor-pointer transition-all hover:bg-slate-100">
-                        <option value="">Semua AC</option>
-                    </select>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Area Coordinator</label>
+                    <select id="filter-ac" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold outline-none"><option value="">Semua AC</option></select>
                 </div>
             </div>
-
-            <!-- Row 2: Toko Lookup -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider ml-1">Kode Toko</label>
-                    <input type="text" id="filter-kode-toko" placeholder="Ketik Kode..." class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none transition-all uppercase placeholder:font-normal">
-                </div>
-                <div class="space-y-1 md:col-span-2">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider ml-1">Nama Toko (Lookup)</label>
-                    <div id="lookup-nama-toko" class="w-full p-3 bg-slate-100 border border-dashed border-slate-300 rounded-xl text-sm font-semibold text-slate-500 min-h-[46px] flex items-center">
-                        Masukkan kode toko...
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Row 3: Search Nama/NIK -->
             <div class="relative">
-                <input type="text" id="search-box" placeholder="Cari Nama Kasir atau NIK..." class="w-full p-4 pl-12 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-4 top-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+                <input type="text" id="search-box" placeholder="Cari Nama, NIK, atau Kode Toko..." class="w-full p-4 pl-12 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-4 top-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             </div>
         </div>
 
         <!-- Tabs -->
         <div class="flex gap-3 mb-6 overflow-x-auto no-scrollbar py-2">
-            <button onclick="switchTab('kecepatan')" id="tab-kecepatan" class="tab-btn active flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-bold whitespace-nowrap">
-                <span>⚡</span> Speed (Target 120s)
-            </button>
-            <button onclick="switchTab('ttm')" id="tab-ttm" class="tab-btn bg-white border border-slate-200 text-slate-500 flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-bold whitespace-nowrap shadow-sm">
-                <span>🎁</span> TTM (Target 25%)
-            </button>
-            <button onclick="switchTab('member')" id="tab-member" class="tab-btn bg-white border border-slate-200 text-slate-500 flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-bold whitespace-nowrap shadow-sm">
-                <span>👥</span> Member (Target 28%)
-            </button>
+            <button onclick="switchTab('kecepatan')" id="tab-kecepatan" class="tab-btn active flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-bold whitespace-nowrap">⚡ Speed</button>
+            <button onclick="switchTab('ttm')" id="tab-ttm" class="tab-btn bg-white border border-slate-200 text-slate-500 px-6 py-3 rounded-2xl text-xs font-bold whitespace-nowrap">🎁 TTM</button>
+            <button onclick="switchTab('member')" id="tab-member" class="tab-btn bg-white border border-slate-200 text-slate-500 px-6 py-3 rounded-2xl text-xs font-bold whitespace-nowrap">👥 Member</button>
         </div>
 
-        <!-- Info Bar -->
         <div class="flex justify-between items-end mb-4 px-2">
             <div>
-                <h2 class="text-xs font-black text-slate-400 uppercase tracking-[0.2em]" id="current-title">Daftar Kecepatan</h2>
+                <h2 class="text-xs font-black text-slate-400 uppercase tracking-widest" id="current-title">Daftar Kecepatan</h2>
                 <p class="text-[10px] text-slate-500 font-medium">Menampilkan <span id="count-display" class="text-blue-600 font-bold">0</span> kasir</p>
             </div>
-            <div class="bg-blue-50 text-blue-700 px-3 py-1 rounded-lg text-[10px] font-bold italic" id="sort-label">
-                Urutan: Paling Lambat
-            </div>
+            <div class="bg-red-50 text-red-700 px-3 py-1 rounded-lg text-[10px] font-bold">Urutan: Prioritas Review</div>
         </div>
 
-        <!-- Main List -->
         <div id="main-content" class="space-y-4">
             <div id="loading-state" class="flex flex-col items-center justify-center py-24">
-                <div class="relative w-16 h-16">
-                    <div class="absolute inset-0 border-4 border-blue-200 rounded-full"></div>
-                    <div class="absolute inset-0 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                </div>
-                <p class="mt-6 text-sm text-slate-500 font-bold animate-pulse">Sinkronisasi data...</p>
+                <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <p class="mt-4 text-sm text-slate-500 font-bold">Mengambil data dari Spreadsheet...</p>
             </div>
         </div>
     </div>
 
     <script>
+        // SCRIPT_URL harus sesuai dengan URL Web App Apps Script Anda
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxnt1h_wieQhQh44w-rmrJA3XzLxrQ6cgvyBdIgUSrYBxLP7Ij2B-mTClI9jk3wNI-n/exec"; 
 
-        const TARGETS = {
-            kecepatan: 120, // Max 120s
-            ttm: 25,        // Min 25%
-            member: 28      // Min 28%
-        };
-
+        const TARGETS = { kecepatan: 120, ttm: 25, member: 28 };
         let appData = { kecepatan: [], ttm: [], member: [], area: {}, lastUpdate: '' };
         let activeTab = 'kecepatan';
-        let filters = { am: '', ac: '', search: '', kodeToko: '' };
+        let filters = { am: '', ac: '', search: '' };
 
         window.onload = () => refreshData();
 
         async function refreshData() {
             const btn = document.getElementById('refresh-btn');
+            const loader = document.getElementById('loading-state');
             btn.classList.add('animate-spin');
+            
             try {
                 const response = await fetch(SCRIPT_URL);
-                appData = await response.json();
-                document.getElementById('last-update').innerText = "Update: " + (appData.lastUpdate || 'Baru saja');
+                const rawData = await response.json();
+                
+                // Logging untuk mempermudah pengecekan data di Console (F12)
+                console.log("Koneksi Berhasil. Data:", rawData);
+
+                appData = {
+                    kecepatan: rawData.kecepatan || [],
+                    ttm: rawData.ttm || [],
+                    member: rawData.member || [],
+                    area: rawData.area || {},
+                    lastUpdate: rawData.lastUpdate || new Date().toLocaleTimeString()
+                };
+
+                document.getElementById('last-update').innerText = "Update: " + appData.lastUpdate;
                 populateSelects();
-                initStoreFilter();
                 render();
             } catch (e) {
-                console.error(e);
-                renderDemo();
+                console.error("Gagal koneksi ke Spreadsheet:", e);
+                document.getElementById('main-content').innerHTML = `
+                    <div class='p-10 text-center text-red-500 font-bold card-premium'>
+                        <p>Gagal mengambil data dari Spreadsheet.</p>
+                        <p class="text-[10px] mt-2 text-slate-400 font-normal">Pastikan Apps Script telah di-deploy sebagai 'Web App' dengan akses 'Anyone'.</p>
+                    </div>`;
             } finally {
                 btn.classList.remove('animate-spin');
             }
         }
 
-        function initStoreFilter() {
-            const kodeInput = document.getElementById('filter-kode-toko');
-            const namaDisplay = document.getElementById('lookup-nama-toko');
-
-            kodeInput.addEventListener('input', (e) => {
-                const kode = e.target.value.toUpperCase();
-                filters.kodeToko = kode;
-
-                if (kode && appData.area[kode]) {
-                    const info = appData.area[kode];
-                    namaDisplay.innerText = info.namaToko;
-                    namaDisplay.className = "w-full p-3 bg-blue-50 border border-blue-200 rounded-xl text-sm font-bold text-blue-700 min-h-[46px] flex items-center shadow-sm";
-                } else if (kode === "") {
-                    namaDisplay.innerText = "Masukkan kode toko...";
-                    namaDisplay.className = "w-full p-3 bg-slate-100 border border-dashed border-slate-300 rounded-xl text-sm font-semibold text-slate-500 min-h-[46px] flex items-center";
-                } else {
-                    namaDisplay.innerText = "Toko tidak ditemukan";
-                    namaDisplay.className = "w-full p-3 bg-red-50 border border-red-200 rounded-xl text-sm font-bold text-red-600 min-h-[46px] flex items-center shadow-sm";
-                }
-                render();
-            });
-        }
-
-        function switchTab(tab) {
-            activeTab = tab;
-            document.querySelectorAll('.tab-btn').forEach(b => {
-                b.className = "tab-btn bg-white border border-slate-200 text-slate-500 flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-bold whitespace-nowrap shadow-sm";
-            });
-            document.getElementById(`tab-${tab}`).className = "tab-btn active flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-bold whitespace-nowrap";
-            
-            const titleMap = { 'kecepatan': 'Daftar Kecepatan', 'ttm': 'Daftar TTM', 'member': 'Daftar Member' };
-            document.getElementById('current-title').innerText = titleMap[tab];
-            
-            render();
-        }
-
+        // Fungsi dinamis untuk mengisi dropdown AM/AC
         function populateSelects() {
             const ams = new Set(), acs = new Set();
-            Object.values(appData.area).forEach(a => { if(a.am) ams.add(a.am); if(a.ac) acs.add(a.ac); });
+            Object.values(appData.area).forEach(a => { 
+                if(a.am) ams.add(a.am); 
+                if(a.ac) acs.add(a.ac); 
+            });
+            
             const amSel = document.getElementById('filter-am');
             const acSel = document.getElementById('filter-ac');
             
-            const prevAM = amSel.value;
-            const prevAC = acSel.value;
+            const currentAM = amSel.value;
+            const currentAC = acSel.value;
 
             amSel.innerHTML = '<option value="">Semua AM</option>';
-            [...ams].sort().forEach(am => amSel.innerHTML += `<option value="${am}" ${am === prevAM ? 'selected' : ''}>${am}</option>`);
+            [...ams].sort().forEach(am => amSel.innerHTML += `<option value="${am}" ${am === currentAM ? 'selected' : ''}>${am}</option>`);
             
             acSel.innerHTML = '<option value="">Semua AC</option>';
-            [...acs].sort().forEach(ac => acSel.innerHTML += `<option value="${ac}" ${ac === prevAC ? 'selected' : ''}>${ac}</option>`);
+            [...acs].sort().forEach(ac => acSel.innerHTML += `<option value="${ac}" ${ac === currentAC ? 'selected' : ''}>${ac}</option>`);
 
             amSel.onchange = (e) => { filters.am = e.target.value; render(); };
             acSel.onchange = (e) => { filters.ac = e.target.value; render(); };
             document.getElementById('search-box').oninput = (e) => { filters.search = e.target.value.toLowerCase(); render(); };
         }
 
+        function switchTab(tab) {
+            activeTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.className = "tab-btn bg-white border border-slate-200 text-slate-500 px-6 py-3 rounded-2xl text-xs font-bold whitespace-nowrap";
+            });
+            document.getElementById(`tab-${tab}`).className = "tab-btn active flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-bold whitespace-nowrap";
+            document.getElementById('current-title').innerText = "Daftar " + tab.charAt(0).toUpperCase() + tab.slice(1);
+            render();
+        }
+
+        // Fungsi RENDER tunggal yang menghandle semua logika tampilan
         function render() {
             const container = document.getElementById('main-content');
             container.innerHTML = '';
             
-            let list = [];
-            if (activeTab === 'kecepatan') {
-                list = appData.kecepatan.map(k => ({ ...k, ...appData.area[k.kodeToko], val: k.avg }))
-                    .sort((a, b) => b.val - a.val);
-            } else if (activeTab === 'ttm') {
-                list = appData.ttm.map(t => ({ ...t, ...appData.area[t.kodeToko], val: (t.qtyRedeem / t.qty50k * 100) || 0 }))
-                    .sort((a, b) => a.val - b.val);
-            } else {
-                list = appData.member.map(m => ({ ...m, ...appData.area[m.kodeToko], val: (m.strukMember / m.totStruk * 100) || 0 }))
-                    .sort((a, b) => a.val - b.val);
-            }
+            let source = appData[activeTab] || [];
+            
+            // Map data dan gabungkan dengan informasi Area berdasarkan Kode Toko
+            let list = source.map(item => {
+                const areaInfo = appData.area[item.kodeToko] || {};
+                let val = 0;
+                
+                // Kalkulasi nilai berdasarkan tab yang aktif
+                if (activeTab === 'kecepatan') val = parseFloat(item.avg) || 0;
+                else if (activeTab === 'ttm') val = (item.qty50k > 0) ? (item.qtyRedeem / item.qty50k * 100) : 0;
+                else if (activeTab === 'member') val = (item.totStruk > 0) ? (item.strukMember / item.totStruk * 100) : 0;
+                
+                return { ...item, ...areaInfo, displayVal: val };
+            });
 
+            // Filter berdasarkan input user
             const filtered = list.filter(item => {
                 const matchAM = !filters.am || item.am === filters.am;
                 const matchAC = !filters.ac || item.ac === filters.ac;
-                const matchToko = !filters.kodeToko || item.kodeToko.toUpperCase().includes(filters.kodeToko);
                 const matchSearch = !filters.search || 
-                                    item.nama.toLowerCase().includes(filters.search) || 
-                                    item.nik.toString().includes(filters.search);
-                return matchAM && matchAC && matchSearch && matchToko;
+                                    (item.nama || "").toLowerCase().includes(filters.search) || 
+                                    (item.nik || "").toString().includes(filters.search) ||
+                                    (item.kodeToko || "").toLowerCase().includes(filters.search);
+                return matchAM && matchAC && matchSearch;
+            });
+
+            // Sorting: Menampilkan performa terendah/terburuk di paling atas
+            filtered.sort((a, b) => {
+                if (activeTab === 'kecepatan') return b.displayVal - a.displayVal; // Speed tinggi = Buruk
+                return a.displayVal - b.displayVal; // Persentase rendah = Buruk
             });
 
             document.getElementById('count-display').innerText = filtered.length;
 
             if (filtered.length === 0) {
-                container.innerHTML = `
-                    <div class="flex flex-col items-center justify-center py-12 text-slate-400 bg-white rounded-2xl border border-dashed border-slate-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <p class="text-sm font-bold">Data tidak ditemukan</p>
-                        <p class="text-[10px]">Coba periksa filter atau kata kunci Anda</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="p-10 text-center text-slate-400 card-premium">Tidak ada data yang sesuai filter</div>`;
                 return;
             }
 
             filtered.forEach((item, i) => {
-                let isBelowTarget = false;
-                if (activeTab === 'kecepatan') {
-                    isBelowTarget = item.val > TARGETS.kecepatan;
-                } else if (activeTab === 'ttm') {
-                    isBelowTarget = item.val < TARGETS.ttm;
-                } else {
-                    isBelowTarget = item.val < TARGETS.member;
-                }
+                // Logika ambang batas (Threshold)
+                let isWarning = false;
+                if (activeTab === 'kecepatan') isWarning = item.displayVal > TARGETS.kecepatan;
+                else if (activeTab === 'ttm') isWarning = item.displayVal < TARGETS.ttm;
+                else isWarning = item.displayVal < TARGETS.member;
 
-                const div = document.createElement('div');
-                div.className = `card-premium p-6 ${isBelowTarget ? 'pulse-warning ring-1 ring-red-100' : ''}`;
-                
-                let detailHtml = '';
-                if (activeTab === 'kecepatan') {
-                    detailHtml = `<div class="grid grid-cols-2 gap-3 mt-4">
-                        <div class="data-grid-item"><p class="text-[8px] font-black text-slate-400 uppercase">JH Buka Kasir</p><p class="text-sm font-bold">${item.jhBukaKasir || 0} </p></div>
-                        <div class="data-grid-item"><p class="text-[8px] font-black text-slate-400 uppercase">Qty Trans</p><p class="text-sm font-bold">${item.qtyTrans || 0}</p></div>
-                    </div>`;
-                } else if (activeTab === 'ttm') {
-                    detailHtml = `<div class="grid grid-cols-2 gap-3 mt-4">
-                        <div class="data-grid-item"><p class="text-[8px] font-black text-slate-400 uppercase">Struk > 50K</p><p class="text-sm font-bold">${item.qty50k || 0}</p></div>
-                        <div class="data-grid-item"><p class="text-[8px] font-black text-slate-400 uppercase">Redeem</p><p class="text-sm font-bold">${item.qtyRedeem || 0}</p></div>
-                    </div>`;
-                } else {
-                    detailHtml = `<div class="grid grid-cols-2 gap-3 mt-4">
-                        <div class="data-grid-item"><p class="text-[8px] font-black text-slate-400 uppercase">Total Struk</p><p class="text-sm font-bold">${item.totStruk || 0}</p></div>
-                        <div class="data-grid-item"><p class="text-[8px] font-black text-slate-400 uppercase">Member</p><p class="text-sm font-bold">${item.strukMember || 0}</p></div>
-                    </div>`;
-                }
-
-                div.innerHTML = `
+                const card = document.createElement('div');
+                card.className = `card-premium p-5 ${isWarning ? 'pulse-warning border-red-200' : ''}`;
+                card.innerHTML = `
                     <div class="flex justify-between items-start">
-                        <div class="flex-1 min-w-0 pr-2">
-                            <div class="flex items-center gap-2 mb-2">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1">
                                 <span class="text-[9px] font-black bg-blue-100 text-blue-700 px-2 py-0.5 rounded">#${i+1}</span>
-                                <h3 class="font-extrabold text-sm uppercase truncate text-slate-800">${item.nama}</h3>
+                                <h3 class="font-bold text-sm uppercase truncate">${item.nama || 'Tanpa Nama'}</h3>
                             </div>
-                            <p class="text-xs font-bold text-blue-600 mb-1">NIK: ${item.nik}</p>
-                            <p class="text-[10px] text-slate-500 font-semibold mb-2 truncate">${item.namaToko || 'Toko'} (${item.kodeToko})</p>
-                            <div class="flex gap-1">
-                                <span class="text-[8px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">${item.ac || 'AC'}</span>
-                                <span class="text-[8px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">${item.am || 'AM'}</span>
+                            <p class="text-xs text-blue-600 font-bold">NIK: ${item.nik || '-'}</p>
+                            <p class="text-[10px] text-slate-500">${item.namaToko || 'Toko'} (${item.kodeToko || '-'})</p>
+                            <div class="flex gap-1 mt-2">
+                                <span class="text-[8px] font-bold bg-slate-100 px-2 py-1 rounded">AC: ${item.ac || '-'}</span>
+                                <span class="text-[8px] font-bold bg-slate-100 px-2 py-1 rounded">AM: ${item.am || '-'}</span>
                             </div>
                         </div>
-                        <div class="text-right shrink-0">
-                            <span class="status-badge ${isBelowTarget ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}">
-                                ${isBelowTarget ? 'Need Review' : 'Good Performance'}
+                        <div class="text-right shrink-0 ml-4">
+                            <span class="status-badge ${isWarning ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}">
+                                ${isWarning ? 'Review' : 'OK'}
                             </span>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase mt-2">${activeTab === 'kecepatan' ? 'Detik' : 'Pencapaian'}</p>
-                            <p class="text-2xl font-black ${isBelowTarget ? 'text-red-600' : 'text-slate-900'} leading-none">
-                                ${activeTab === 'kecepatan' ? item.val : item.val.toFixed(1) + '%'}
+                            <p class="text-2xl font-black mt-2 ${isWarning ? 'text-red-600' : 'text-slate-800'}">
+                                ${activeTab === 'kecepatan' ? item.displayVal.toFixed(1) : item.displayVal.toFixed(1) + '%'}
                             </p>
+                            <p class="text-[8px] font-bold text-slate-400 uppercase">${activeTab === 'kecepatan' ? 'Detik' : 'Pencapaian'}</p>
                         </div>
                     </div>
-                    ${detailHtml}
                 `;
-                container.appendChild(div);
+                container.appendChild(card);
             });
-        }
-
-        function renderDemo() {
-            appData = {
-                area: { "SK02": { am: "ISMAIL SYAMSUL", ac: "RIANDY ADONES", namaToko: "DAAN MOGOT" } },
-                kecepatan: [{ kodeToko: "SK02", nik: "0217053109", nama: "ALICE DOE", avg: 145.2, jhBukaKasir: 15, qtyTrans: 1200 }],
-                ttm: [{ kodeToko: "SK02", nik: "0217053109", nama: "ALICE DOE", qty50k: 450, qtyRedeem: 22 }],
-                member: [{ kodeToko: "SK02", nik: "0217053109", nama: "ALICE DOE", totStruk: 800, strukMember: 45 }],
-                lastUpdate: "Mode Demo"
-            };
-            populateSelects();
-            initStoreFilter();
-            render();
         }
     </script>
 </body>
